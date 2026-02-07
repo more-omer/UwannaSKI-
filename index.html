@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שאלה לנועי</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0f7fa; /* צבע רקע קריר כמו שלג */
+            overflow: hidden; /* מונע גלילה כשהכפתור בורח */
+            text-align: center;
+        }
+
+        h1 {
+            color: #0277bd;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 200px; /* שטח לכפתורים */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+        }
+
+        button {
+            padding: 20px 50px;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        #yes-btn {
+            background-color: #4CAF50;
+            color: white;
+            z-index: 10;
+        }
+        
+        #yes-btn:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+
+        #no-btn {
+            background-color: #f44336;
+            color: white;
+            position: absolute; /* מאפשר לנו להזיז אותו חופשי */
+            transition: top 0.2s, left 0.2s; /* תנועה חלקה כשהוא בורח */
+        }
+
+        /* עיצוב התמונה */
+        #my-image {
+            display: none;
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 5px solid white;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">נועי בחיאת נועי בא לך שנסגור עוד סקי השנה?</h1>
+
+    <div class="container" id="buttons-area">
+        <button id="yes-btn" onclick="sayYes()">כן ברור!</button>
+        <button id="no-btn" onmouseover="runAway()">לא...</button>
+    </div>
+
+    <img id="my-image" src="ski.jpg" alt="Ski Photo">
+
+    <script>
+        function runAway() {
+            const noBtn = document.getElementById('no-btn');
+            
+            // חישוב מיקום אקראי חדש במסך
+            // Math.random() עובד בדיוק כמו בפייתון
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        function sayYes() {
+            // הסתרת הטקסט והכפתורים
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('buttons-area').style.display = 'none';
+
+            // הצגת התמונה
+            const img = document.getElementById('my-image');
+            img.style.display = 'block';
+            
+            // אופציונלי: אפשר להוסיף קונפטי או הודעה נוספת
+        }
+    </script>
+</body>
+</html>
