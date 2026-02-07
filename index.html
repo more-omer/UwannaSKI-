@@ -13,8 +13,8 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #e0f7fa; /* צבע רקע קריר כמו שלג */
-            overflow: hidden; /* מונע גלילה כשהכפתור בורח */
+            background-color: #e0f7fa;
+            overflow: hidden;
             text-align: center;
         }
 
@@ -26,13 +26,12 @@
         }
 
         .container {
-            position: relative;
             width: 100%;
-            height: 200px; /* שטח לכפתורים */
+            height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 50px;
+            gap: 50px; /* רווח יפה בין הכפתורים */
         }
 
         button {
@@ -43,7 +42,7 @@
             border-radius: 50px;
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
+            transition: transform 0.2s; /* אנימציה רק לגודל */
         }
 
         #yes-btn {
@@ -57,14 +56,14 @@
             background-color: #45a049;
         }
 
+        /* --- התיקון כאן: הורדנו את ה-absolute מההתחלה --- */
         #no-btn {
             background-color: #f44336;
             color: white;
-            position: absolute; /* מאפשר לנו להזיז אותו חופשי */
-            transition: top 0.2s, left 0.2s; /* תנועה חלקה כשהוא בורח */
+            /* position: absolute;  <-- מחקנו את זה */
+            transition: top 0.2s, left 0.2s; 
         }
 
-        /* עיצוב התמונה */
         #my-image {
             display: none;
             max-width: 90%;
@@ -73,11 +72,15 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             border: 5px solid white;
             animation: popIn 0.5s ease-out;
+            position: absolute; /* כדי שהתמונה תהיה במרכז */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -96,8 +99,10 @@
         function runAway() {
             const noBtn = document.getElementById('no-btn');
             
-            // חישוב מיקום אקראי חדש במסך
-            // Math.random() עובד בדיוק כמו בפייתון
+            // --- התיקון ב-JS: הופכים אותו ל"מרחף" רק כשבורחים ---
+            noBtn.style.position = 'fixed'; 
+            
+            // חישוב המיקום החדש
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
 
@@ -106,15 +111,11 @@
         }
 
         function sayYes() {
-            // הסתרת הטקסט והכפתורים
             document.getElementById('question').style.display = 'none';
             document.getElementById('buttons-area').style.display = 'none';
 
-            // הצגת התמונה
             const img = document.getElementById('my-image');
             img.style.display = 'block';
-            
-            // אופציונלי: אפשר להוסיף קונפטי או הודעה נוספת
         }
     </script>
 </body>
